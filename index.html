@@ -142,11 +142,13 @@
           <feDisplacementMap in="SourceGraphic" in2="n" scale="1.2" xChannelSelector="R" yChannelSelector="G"/>
         </filter>
       </defs>
+      <g id="ear-letters-1"></g>
+      <g id="ear-letters-2"></g>
       <!-- mirror horizontally: translate(319,0) scale(-1,1) -->
       <g transform="translate(319,0) scale(-1,1)">
       <path id="ear-line"
         fill="none"
-        stroke="#0a0a0a"
+        stroke="none"
         stroke-width="1.8"
         stroke-linecap="round"
         stroke-linejoin="round"
@@ -168,36 +170,129 @@
   document.getElementById("yr").textContent = new Date().getFullYear();
   const earWrap = document.getElementById("ear-wrap");
   const path = document.getElementById("ear-line");
-  let len = 0;
 
-  function init() {
-    len = path.getTotalLength();
-    path.style.strokeDasharray = len;
-    path.style.strokeDashoffset = 0;
-    onScroll();
-  }
+  const BIO = "I LIKE TO THINK I'VE ALWAYS KNOWN HOW TO READ A ROOM. AS A CHOIR KID, I TRAINED MY EAR TO KNOW WHEN A BLEND LOCKS IN, A SIMILAR NEGOTIATION TO GROWING UP ACROSS CULTURES IN HONG KONG, NEW YORK, AND BOSTON. AT HARVARD, I WROTE 118 PAGES INVESTIGATING 19TH-CENTURY AMERICAN DOMESTICITY THROUGH THE LENS OF COMMERCIAL ADVERTISING, AND HAVE SPENT MY CAREER SINCE STUDYING THE TECHNOLOGY AND ECONOMICS OF EVERYDAY LIFE.";
+
+  let letterEls1 = [], letterEls2 = [];
+  let totalLetters1 = 0, totalLetters2 = 0;
 
   function clamp(v,a,b){return Math.max(a,Math.min(b,v));}
   function ease(t){return t<0.5?2*t*t:-1+(4-2*t)*t;}
   function lerp(a,b,t){return a+(b-a)*t;}
 
-  function onScroll() {
-    const vh = window.innerHeight;
-    const sy = window.scrollY;
-
-    // Unravel: starts at scroll 0, finishes at 1.8 * vh
-    const uP = ease(clamp(sy / (vh * 1.8), 0, 1));
-    path.style.strokeDashoffset = uP * len;
-
-    // Drift: starts at 1.2vh, finishes at 2.2vh
-    const dP = ease(clamp((sy - vh * 1.2) / vh, 0, 1));
-    const ty = lerp(0, -vh * 1.1, dP);
-    earWrap.style.transform = `translateX(-50%) translateY(${ty}px)`;
-    earWrap.style.opacity = lerp(1, 0, ease(clamp((sy - vh * 1.8) / (vh * 0.4), 0, 1)));
+  // Build a temporary path element to measure subpath lengths
+  function makeTempPath(d) {
+    const p = document.createElementNS("http://www.w3.org/2000/svg","path");
+    p.setAttribute("d", d);
+    return p;
   }
 
-  window.addEventListener("scroll", onScroll, {passive:true});
-  window.addEventListener("load", init);
+  function placeletters(pathEl, group, text, charSpacing, fillColor) {
+    const ns = "http://www.w3.org/2000/svg";
+    const len = pathEl.getTotalLength();
+    const els = [];
+    let dist = 0;
+    let i = 0;
+    while (dist < len && i < text.length) {
+      const ch = text[i];
+      // Sample point and tangent
+      const pt0 = pathEl.getPointAtLength(Math.max(0, dist - 0.1));
+      const pt1 = pathEl.getPointAtLength(Math.min(len, dist + 0.1));
+      const angle = Math.atan2(pt1.y - pt0.y, pt1.x - pt0.x) * 180 / Math.PI;
+      const pt = pathEl.getPointAtLength(dist);
+
+      // pt is in path's local coordinate space (same as ear-line, inside the mirrored group).
+      // The group applies translate(319,0) scale(-1,1), so visual x = 319 - pt.x.
+      // We place the text OUTSIDE the group, so we must convert to SVG canvas coords:
+      const vx = 319 - pt.x;
+      const vy = pt.y;
+      // Angle also flips: visual angle = 180 - angle (mirror flips x, so negate x component)
+      const vAngle = 180 - angle;
+
+      const t = document.createElementNS(ns, "text");
+      t.setAttribute("font-family", '"Fragment Mono", monospace');
+      t.setAttribute("font-size", "5.7");
+      t.setAttribute("fill", fillColor);
+      t.setAttribute("text-anchor", "middle");
+      t.setAttribute("dominant-baseline", "middle");
+      t.setAttribute("transform", `translate(${vx.toFixed(2)},${vy.toFixed(2)}) rotate(${vAngle.toFixed(2)})`);
+      t.textContent = ch;
+      group.appendChild(t);
+      els.push(t);
+
+      dist += charSpacing;
+      i++;
+    }
+    return els;
+  }
+
+  function buildLetters() {
+    const svg = document.getElementById("ear-svg");
+    const ns = "http://www.w3.org/2000/svg";
+
+    // Get rendered font size in SVG units
+    const renderedH = svg.getBoundingClientRect().height || (window.innerHeight * 1.2);
+    const pxPerUnit = renderedH / 500;
+    const fsSVG = 11 / pxPerUnit;
+    const charSpacing = fsSVG * 0.65; // tight enough to fill full path length
+
+    // Get original path d and split subpaths
+    const origD = path.getAttribute("d");
+    const parts = origD.trim().split(/(?=M\s)/);
+    const d1 = parts[0].trim();
+    const d2 = parts[1].trim();
+
+    const p1 = makeTempPath(d1);
+    const p2 = makeTempPath(d2);
+    // Append temporarily to measure (needs to be in DOM for getTotalLength in some browsers)
+    svg.appendChild(p1); svg.appendChild(p2);
+
+    const len1 = p1.getTotalLength();
+    const len2 = p2.getTotalLength();
+    const n1 = Math.floor(len1 / charSpacing);
+    const n2 = Math.floor(len2 / charSpacing);
+
+    // Repeat BIO if needed to fill both paths
+    const BIOLONG = (BIO + " " + BIO + " " + BIO);
+    const text1 = BIOLONG.slice(0, n1);
+    const text2 = BIOLONG.slice(n1, n1 + n2);
+
+    const g1 = document.getElementById("ear-letters-1");
+    const g2 = document.getElementById("ear-letters-2");
+    g1.innerHTML = ""; g2.innerHTML = "";
+
+    // Update font sizes on existing elements
+    const color = document.getElementById("text-color-input").value;
+    letterEls1 = placeletters(p1, g1, text1, charSpacing, color);
+    letterEls2 = placeletters(p2, g2, text2, charSpacing, color);
+
+    // Update font-size on all placed letters
+    [...letterEls1, ...letterEls2].forEach(el => el.setAttribute("font-size", fsSVG.toFixed(3)));
+
+    totalLetters1 = letterEls1.length;
+    totalLetters2 = letterEls2.length;
+
+    svg.removeChild(p1); svg.removeChild(p2);
+  }
+
+  function onScroll() {
+    const vh = window.innerHeight, sy = window.scrollY;
+    const uP = ease(clamp(sy / (vh * 1.8), 0, 1));
+
+    // Hide letters from the end inward (unravel)
+    const show1 = Math.round(totalLetters1 * (1 - uP));
+    const show2 = Math.round(totalLetters2 * (1 - uP));
+    letterEls1.forEach((el, i) => el.style.display = i < show1 ? "" : "none");
+    letterEls2.forEach((el, i) => el.style.display = i < show2 ? "" : "none");
+
+    const dP = ease(clamp((sy - vh * 1.2) / vh, 0, 1));
+    earWrap.style.transform = `translateX(-50%) translateY(${lerp(0,-vh*1.1,dP)}px)`;
+    earWrap.style.opacity = lerp(1, 0, ease(clamp((sy - vh*1.8)/(vh*0.4), 0, 1)));
+  }
+
+  window.addEventListener("scroll", onScroll, {passive: true});
+  window.addEventListener("load", () => { buildLetters(); onScroll(); });
+  window.addEventListener("resize", buildLetters);
 </script>
 
 <div id="color-picker-wrap">
@@ -212,9 +307,7 @@
     document.querySelectorAll('.bio-text, .corner-nav a, .corner-nav-item, .site-name').forEach(el => {
       el.style.color = c;
     });
-    // Update ear line stroke
-    const earLine = document.getElementById('ear-line');
-    if (earLine) earLine.setAttribute('stroke', c);
+    document.querySelectorAll('#ear-letters-1 text, #ear-letters-2 text').forEach(el => el.setAttribute('fill', c));
   });
 </script>
 </body>
