@@ -76,18 +76,20 @@
 
   main {
     padding: 2.4rem 2.6rem 6rem;
-    max-width: 560px;
   }
 
   .back {
     font-size: 11px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    display: inline-block;
-    margin-bottom: 3.6rem;
+    text-decoration: none;
+    color: #0a0a0a;
+    opacity: 0.35;
     transition: opacity 0.2s;
+    display: block;
+    margin-bottom: 2rem;
   }
-  .back:hover { opacity: 0.35; }
+  .back:hover { opacity: 1; }
 
   .things-list {
     display: flex;
@@ -96,12 +98,6 @@
   }
 
   .thing {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .thing-note {
     font-size: 11px;
     letter-spacing: 0.1em;
     line-height: 1.7;
@@ -109,9 +105,6 @@
   }
 
   .thing-link {
-    font-size: 10px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
     opacity: 0.35;
     transition: opacity 0.2s;
     word-break: break-all;
@@ -127,13 +120,6 @@
 </div>
 
 <div id="content">
-  <nav class="corner-nav">
-    <a href="https://substack.com/@laurenwlee" target="_blank">Writing</a>
-    <a href="things.html">Things</a>
-    <a href="community.html">Community</a>
-    <a href="mailto:laurenlee00@gmail.com">Contact</a>
-  </nav>
-
   <main>
     <a class="back" href="index.html">← Back</a>
     <div class="things-list" id="things-list"></div>
@@ -176,10 +162,7 @@
   THINGS.forEach(item => {
     const div = document.createElement("div");
     div.className = "thing";
-    div.innerHTML = `
-      <span class="thing-note">${item.note}</span>
-      <a class="thing-link" href="${item.url}" target="_blank" rel="noopener">${item.url}</a>
-    `;
+    div.innerHTML = `<span class="thing-note">${item.note} </span><a class="thing-link" href="${item.url}" target="_blank" rel="noopener">${item.url}</a>`;
     list.appendChild(div);
   });
 </script>
