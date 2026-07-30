@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Things — Lauren Wooyoung Lee</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,7 +34,7 @@
   }
   #gate input {
     font-family: "Fragment Mono", monospace;
-    font-size: 11px;
+    font-size: 16px; /* 16px prevents iOS auto-zoom on focus */
     letter-spacing: 0.1em;
     border: none;
     border-bottom: 1px solid #0a0a0a;
@@ -44,6 +44,8 @@
     text-align: center;
     background: transparent;
     color: #0a0a0a;
+    -webkit-appearance: none;
+    border-radius: 0;
   }
   #gate input::placeholder { opacity: 0.3; }
   #gate-error {
