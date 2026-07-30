@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Things — Lauren Wooyoung Lee</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fragment+Mono:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: #fff;
+    color: #0a0a0a;
+    font-family: "Fragment Mono", monospace;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* ── Gate ── */
+  #gate {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    z-index: 100;
+  }
+  #gate input {
+    font-family: "Fragment Mono", monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    border: none;
+    border-bottom: 1px solid #0a0a0a;
+    outline: none;
+    padding: 0.4rem 0;
+    width: 160px;
+    text-align: center;
+    background: transparent;
+    color: #0a0a0a;
+  }
+  #gate input::placeholder { opacity: 0.3; }
+  #gate-error {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0;
+    margin-top: 1rem;
+    transition: opacity 0.2s;
+  }
+  #gate-error.visible { opacity: 0.4; }
+
+  /* ── Content ── */
+  #content { display: none; }
+  #content.visible { display: block; }
+
+  .corner-nav {
+    position: fixed;
+    top: 2.4rem;
+    right: 2.6rem;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.3rem;
+  }
+  .corner-nav a {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: opacity 0.2s;
+  }
+  .corner-nav a:hover { opacity: 0.35; }
+
+  main {
+    padding: 2.4rem 2.6rem 6rem;
+    max-width: 560px;
+  }
+
+  .back {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 3.6rem;
+    transition: opacity 0.2s;
+  }
+  .back:hover { opacity: 0.35; }
+
+  .things-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+  }
+
+  .thing {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .thing-note {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    line-height: 1.7;
+    text-transform: uppercase;
+  }
+
+  .thing-link {
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.35;
+    transition: opacity 0.2s;
+    word-break: break-all;
+  }
+  .thing-link:hover { opacity: 1; }
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <input id="pw-input" type="password" placeholder="password" autocomplete="off" autofocus>
+  <div id="gate-error">try again</div>
+</div>
+
+<div id="content">
+  <nav class="corner-nav">
+    <a href="https://substack.com/@laurenwlee" target="_blank">Writing</a>
+    <a href="things.html">Things</a>
+    <a href="community.html">Community</a>
+    <a href="mailto:laurenlee00@gmail.com">Contact</a>
+  </nav>
+
+  <main>
+    <a class="back" href="index.html">← Back</a>
+    <div class="things-list" id="things-list"></div>
+  </main>
+</div>
+
+<script>
+  // ── Password ──
+  const input = document.getElementById("pw-input");
+  const gate = document.getElementById("gate");
+  const content = document.getElementById("content");
+  const error = document.getElementById("gate-error");
+
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      if (input.value === "withnarrative") {
+        gate.style.display = "none";
+        content.classList.add("visible");
+      } else {
+        error.classList.add("visible");
+        input.value = "";
+        setTimeout(() => error.classList.remove("visible"), 1500);
+      }
+    }
+  });
+
+  // ── Things — add new items at the TOP ──
+  const THINGS = [
+    {
+      note: "The Simulation Company's Series B announcement. Brand identity reveal with new logo and website ft. BTF "Sims" game (July 2026).",
+      url: "https://www.simile.com/"
+    },
+    {
+      note: "Granola's Apple Watch launch. Limited bands from textile artist Nowshin Prenon (July 2026).",
+      url: "https://x.com/soleio/status/2082206247244399069?s=20"
+    },
+  ];
+
+  const list = document.getElementById("things-list");
+  THINGS.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "thing";
+    div.innerHTML = `
+      <span class="thing-note">${item.note}</span>
+      <a class="thing-link" href="${item.url}" target="_blank" rel="noopener">${item.url}</a>
+    `;
+    list.appendChild(div);
+  });
+</script>
+</body>
+</html>
