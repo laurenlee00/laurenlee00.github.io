@@ -14,7 +14,7 @@ const THINGS = [
     url: "https://www.simile.com/"
   },
   {
-    note: "Granola sends beautifully designed spoons. Spoon from British industrial designer David Mellor's penultimate collection. (April 2026).",
+    note: "Granola gifts “beautifully designed spoons”. Spoon from British industrial designer David Mellor's penultimate collection. (April 2026).",
     url: "https://www.linkedin.com/feed/update/urn:li:share:7445767982384992257/"
   },
 ];
