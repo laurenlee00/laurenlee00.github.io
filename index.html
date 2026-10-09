@@ -213,6 +213,11 @@
   function makeTempPath(d) {
     const p = document.createElementNS("http://www.w3.org/2000/svg","path");
     p.setAttribute("d", d);
+    // Measuring-only shape: never paint it (an SVG path is filled black by default).
+    p.setAttribute("fill", "none");
+    p.setAttribute("stroke", "none");
+    p.setAttribute("visibility", "hidden");
+    p.setAttribute("class", "temp-measure");
     return p;
   }
 
@@ -276,34 +281,38 @@
     const p1 = makeTempPath(d1);
     const p2 = makeTempPath(d2);
     // Append temporarily to measure (needs to be in DOM for getTotalLength in some browsers)
+    svg.querySelectorAll(".temp-measure").forEach(el => el.remove());
     svg.appendChild(p1); svg.appendChild(p2);
+    try {
 
-    const len1 = p1.getTotalLength();
-    const len2 = p2.getTotalLength();
-    const n1 = Math.floor(len1 / charSpacing);
-    const n2 = Math.floor(len2 / charSpacing);
+      const len1 = p1.getTotalLength();
+      const len2 = p2.getTotalLength();
+      const n1 = Math.floor(len1 / charSpacing);
+      const n2 = Math.floor(len2 / charSpacing);
 
-    // Repeat BIO if needed to fill both paths
-    const BIOLONG = (BIO + " " + BIO + " " + BIO);
-    const text1 = BIOLONG.slice(0, n1);
-    const text2 = BIOLONG.slice(n1, n1 + n2);
+      // Repeat BIO if needed to fill both paths
+      const BIOLONG = (BIO + " " + BIO + " " + BIO);
+      const text1 = BIOLONG.slice(0, n1);
+      const text2 = BIOLONG.slice(n1, n1 + n2);
 
-    const g1 = document.getElementById("ear-letters-1");
-    const g2 = document.getElementById("ear-letters-2");
-    g1.innerHTML = ""; g2.innerHTML = "";
+      const g1 = document.getElementById("ear-letters-1");
+      const g2 = document.getElementById("ear-letters-2");
+      g1.innerHTML = ""; g2.innerHTML = "";
 
-    // Update font sizes on existing elements
-    const color = document.getElementById("text-color-input").value;
-    letterEls1 = placeletters(p1, g1, text1, charSpacing, color);
-    letterEls2 = placeletters(p2, g2, text2, charSpacing, color);
+      // Update font sizes on existing elements
+      const color = document.getElementById("text-color-input").value;
+      letterEls1 = placeletters(p1, g1, text1, charSpacing, color);
+      letterEls2 = placeletters(p2, g2, text2, charSpacing, color);
 
-    // Update font-size on all placed letters
-    [...letterEls1, ...letterEls2].forEach(el => el.setAttribute("font-size", fsSVG.toFixed(3)));
+      // Update font-size on all placed letters
+      [...letterEls1, ...letterEls2].forEach(el => el.setAttribute("font-size", fsSVG.toFixed(3)));
 
-    totalLetters1 = letterEls1.length;
-    totalLetters2 = letterEls2.length;
+      totalLetters1 = letterEls1.length;
+      totalLetters2 = letterEls2.length;
 
-    svg.removeChild(p1); svg.removeChild(p2);
+    } finally {
+      p1.remove(); p2.remove();
+    }
   }
 
   function onScroll() {
