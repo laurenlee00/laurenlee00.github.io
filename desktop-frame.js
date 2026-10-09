@@ -3,7 +3,7 @@
 // that screen up to fill the window's height. Every size, line break and overlap
 // comes from the real phone layout, so the desktop view always matches it.
 (function () {
-  var PHONE_W = 402, PHONE_H = 674; // the virtual screen shown on computers
+  var PHONE_W = 430, PHONE_H = 674; // the virtual screen shown on computers (a little wider than a 402×674 iPhone)
   var isComputer = window.matchMedia(
     "(min-width: 768px) and (hover: hover) and (pointer: fine)"
   ).matches;
@@ -17,7 +17,9 @@
     document.head.appendChild(base);
     // No scrollbar inside the phone screen (phones don't show one either).
     var noBar = document.createElement("style");
-    noBar.textContent = "html{scrollbar-width:none}html::-webkit-scrollbar{display:none}";
+    noBar.textContent = "html{scrollbar-width:none}html::-webkit-scrollbar{display:none}" +
+      // Keep the bio at the iPhone's text width so its line breaks match the phone.
+      ".bio-text{max-width:318.8px}";
     document.head.appendChild(noBar);
     return;
   }
