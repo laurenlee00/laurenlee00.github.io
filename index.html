@@ -134,16 +134,15 @@
   #text-color-input::-webkit-color-swatch { border: none; border-radius: 50%; }
   #text-color-input::-moz-color-swatch { border: none; border-radius: 50%; }
 
-  /* ── Desktop: show the site exactly as a phone shows it, centered ──
-     A 402px column with the same text sizes and spacing as an iPhone,
-     and the ear sized as on a 688px-tall phone screen (120% of it),
-     so it's cropped at the sides the same way. */
+  /* ── Desktop: show the site as a centered phone-shaped column ──
+     The column has the same width-to-height ratio as a phone screen (402×688),
+     and the ear keeps the phone's size relative to the column, so it's cropped
+     the same way. Menu, name and bio text stay at their normal sizes. */
   @media (min-width: 768px) {
-    :root { --col: 402px; }
+    :root { --col: min(calc(100vh * 402 / 688), 100vw); }
     html { background: #fff; }
-    body { max-width: var(--col); margin: 0 auto; position: relative; min-height: 100vh; box-shadow: -1px 0 0 #eee, 1px 0 0 #eee; }
+    body { max-width: var(--col); margin: 0 auto; position: relative; min-height: 100vh; }
     #landing { width: 100%; }
-    #ear-svg { height: 826px; }
     #ear-wrap { clip-path: inset(0 calc(50% - var(--col) / 2)); }
     #color-picker-wrap { right: calc(50% - var(--col) / 2 + 2.6rem); }
   }
@@ -262,7 +261,10 @@
     // Get rendered font size in SVG units
     const renderedH = svg.getBoundingClientRect().height || (window.innerHeight * 1.2);
     const pxPerUnit = renderedH / 500;
-    const fsSVG = 11 / pxPerUnit;
+    // On desktop the ear is drawn larger, so its letters grow with it and the
+    // pattern of words around the ear matches the phone.
+    const earScale = window.matchMedia("(min-width: 768px)").matches ? window.innerHeight / 688 : 1;
+    const fsSVG = 11 * earScale / pxPerUnit;
     const charSpacing = fsSVG * 0.65; // tight enough to fill full path length
 
     // Get original path d and split subpaths
