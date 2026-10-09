@@ -117,17 +117,10 @@
   }
   .thing-link:hover { opacity: 1; }
 
-  /* ── Desktop: show the page as a centered phone screen (scaled from 402×688) ── */
+  /* ── Desktop: show the page exactly as a phone shows it, centered ── */
   @media (min-width: 768px) {
-    :root { --u: calc(100vh / 688); }
     html { background: #fff; }
-    body { max-width: min(calc(402 * var(--u)), 100vw); margin: 0 auto; box-shadow: -1px 0 0 #eee, 1px 0 0 #eee;
-           padding: calc(38.4 * var(--u)) calc(41.6 * var(--u)); }
-    .back { font-size: calc(11 * var(--u)); margin-bottom: calc(32 * var(--u)); }
-    .thing, .soon { font-size: calc(11 * var(--u)); }
-    .things-list { gap: calc(38.4 * var(--u)); }
-    #gate input { font-size: calc(16 * var(--u)); width: calc(160 * var(--u)); }
-    #gate-error { font-size: calc(10 * var(--u)); }
+    body { max-width: 402px; margin: 0 auto; box-shadow: -1px 0 0 #eee, 1px 0 0 #eee; }
   }
 </style>
 </head>

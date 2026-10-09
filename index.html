@@ -134,23 +134,18 @@
   #text-color-input::-webkit-color-swatch { border: none; border-radius: 50%; }
   #text-color-input::-moz-color-swatch { border: none; border-radius: 50%; }
 
-  /* ── Desktop: show the site as a centered phone screen ──
-     Everything is scaled from a 402×688 phone view (--u = one phone pixel),
-     so the ear crop, text and spacing keep the phone's proportions. */
+  /* ── Desktop: show the site exactly as a phone shows it, centered ──
+     A 402px column with the same text sizes and spacing as an iPhone,
+     and the ear sized as on a 688px-tall phone screen (120% of it),
+     so it's cropped at the sides the same way. */
   @media (min-width: 768px) {
-    :root { --u: calc(100vh / 688); --col: min(calc(402 * var(--u)), 100vw); }
+    :root { --col: 402px; }
     html { background: #fff; }
     body { max-width: var(--col); margin: 0 auto; position: relative; min-height: 100vh; box-shadow: -1px 0 0 #eee, 1px 0 0 #eee; }
     #landing { width: 100%; }
+    #ear-svg { height: 826px; }
     #ear-wrap { clip-path: inset(0 calc(50% - var(--col) / 2)); }
-    .site-name { bottom: calc(38.4 * var(--u)); left: calc(41.6 * var(--u)); font-size: calc(11 * var(--u)); }
-    .corner-nav { top: calc(38.4 * var(--u)); right: calc(41.6 * var(--u)); gap: calc(4.8 * var(--u)); }
-    .corner-nav a, .corner-nav-item { font-size: calc(11 * var(--u)); }
-    .page-section { padding: calc(44.8 * var(--u)) calc(41.6 * var(--u)) calc(64 * var(--u)); }
-    .bio-text { font-size: calc(13 * var(--u)); }
-    footer { padding: calc(32 * var(--u)) calc(44.8 * var(--u)); font-size: calc(10 * var(--u)); }
-    #color-picker-wrap { bottom: calc(38.4 * var(--u)); right: calc(50% - var(--col) / 2 + 41.6 * var(--u)); }
-    #text-color-input { width: calc(14 * var(--u)); height: calc(14 * var(--u)); }
+    #color-picker-wrap { right: calc(50% - var(--col) / 2 + 2.6rem); }
   }
 </style>
 </head>
@@ -267,9 +262,7 @@
     // Get rendered font size in SVG units
     const renderedH = svg.getBoundingClientRect().height || (window.innerHeight * 1.2);
     const pxPerUnit = renderedH / 500;
-    // On desktop the page is a scaled-up phone screen, so letters scale too.
-    const phoneScale = window.matchMedia("(min-width: 768px)").matches ? window.innerHeight / 688 : 1;
-    const fsSVG = 11 * phoneScale / pxPerUnit;
+    const fsSVG = 11 / pxPerUnit;
     const charSpacing = fsSVG * 0.65; // tight enough to fill full path length
 
     // Get original path d and split subpaths
