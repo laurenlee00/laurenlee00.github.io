@@ -133,47 +133,58 @@
 </div>
 
 <script>
-  // ── Password ──
+  // ── Password: checked on the server by /api/things ──
   const input = document.getElementById("pw-input");
   const gate = document.getElementById("gate");
   const content = document.getElementById("content");
   const error = document.getElementById("gate-error");
-
-  input.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") {
-      if (input.value === "withnarrative") {
-        gate.style.display = "none";
-        content.classList.add("visible");
-      } else {
-        error.classList.add("visible");
-        input.value = "";
-        setTimeout(() => error.classList.remove("visible"), 1500);
-      }
-    }
-  });
-
-  // ── Things — add new items at the TOP ──
-  const THINGS = [
-    {
-      note: "Terrain's History Museum. How will we increasingly derive value from things with distinct physicality? (September 2026).",
-      url: "https://www.terrain.com/history"
-    },
-    {
-      note: "The Simulation Company's Series B announcement. Brand identity reveal with new logo and website ft. BTF “Sims” game (July 2026).",
-      url: "https://www.simile.com/"
-    },
-    {
-      note: "Granola's Apple Watch launch. Limited bands from textile artist Nowshin Prenon (July 2026).",
-      url: "https://x.com/soleio/status/2082206247244399069?s=20"
-    },
-  ];
-
   const list = document.getElementById("things-list");
-  THINGS.forEach(item => {
-    const div = document.createElement("div");
-    div.className = "thing";
-    div.innerHTML = `<span class="thing-note">${item.note} </span><a class="thing-link" href="${item.url}" target="_blank" rel="noopener">${item.url}</a>`;
-    list.appendChild(div);
+
+  function showError() {
+    error.classList.add("visible");
+    input.value = "";
+    setTimeout(() => error.classList.remove("visible"), 1500);
+  }
+
+  function render(things) {
+    list.textContent = "";
+    things.forEach(item => {
+      const div = document.createElement("div");
+      div.className = "thing";
+      const note = document.createElement("span");
+      note.className = "thing-note";
+      note.textContent = item.note + " ";
+      const link = document.createElement("a");
+      link.className = "thing-link";
+      link.href = item.url;
+      link.target = "_blank";
+      link.rel = "noopener";
+      link.textContent = item.url;
+      div.append(note, link);
+      list.appendChild(div);
+    });
+  }
+
+  let busy = false;
+  input.addEventListener("keydown", async (e) => {
+    if (e.key !== "Enter" || busy) return;
+    busy = true;
+    try {
+      const res = await fetch("/api/things", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password: input.value })
+      });
+      if (!res.ok) return showError();
+      const data = await res.json();
+      render(data.things);
+      gate.style.display = "none";
+      content.classList.add("visible");
+    } catch (err) {
+      showError();
+    } finally {
+      busy = false;
+    }
   });
 </script>
 </body>
