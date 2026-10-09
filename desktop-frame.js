@@ -17,9 +17,12 @@
     document.head.appendChild(base);
     // No scrollbar inside the phone screen (phones don't show one either).
     var noBar = document.createElement("style");
-    noBar.textContent = "html{scrollbar-width:none}html::-webkit-scrollbar{display:none}" +
-      // Keep the bio at the iPhone's text width so its line breaks match the phone.
-      ".bio-text{max-width:318.8px}";
+    noBar.textContent = "html{scrollbar-width:none!important}html::-webkit-scrollbar{display:none!important}" +
+      // Desktop bio: a touch smaller than on the phone (12px instead of 13px),
+      // with its width scaled to match, so the line breaks stay the same.
+      ".bio-text{font-size:12px!important;max-width:294.3px!important}" +
+      // Desktop color dot: a touch smaller (12px instead of 14px).
+      "#text-color-input{width:12px!important;height:12px!important}";
     document.head.appendChild(noBar);
     return;
   }
