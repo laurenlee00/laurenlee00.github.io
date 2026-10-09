@@ -38,10 +38,16 @@
     opacity: 0.5;
   }
 
-  /* ── Desktop: show the page exactly as a phone shows it, centered ── */
+  /* ── Desktop: show the phone layout, scaled up as one picture (402×674 phone) ── */
   @media (min-width: 768px) {
+    :root { --u: calc(100vh / 674); }
     html { background: #fff; }
-    body { max-width: min(calc(100vh * 402 / 688), 100vw); margin: 0 auto; }
+    body { max-width: calc(402 * var(--u)); margin: 0 auto; padding: calc(38.4 * var(--u)) calc(41.6 * var(--u)); }
+    .back { font-size: calc(11 * var(--u)); margin-bottom: calc(32 * var(--u)); }
+    .thing, .soon { font-size: calc(11 * var(--u)); }
+    .things-list { gap: calc(38.4 * var(--u)); }
+    #gate input { font-size: calc(16 * var(--u)); width: calc(160 * var(--u)); }
+    #gate-error { font-size: calc(10 * var(--u)); }
   }
 </style>
 </head>
