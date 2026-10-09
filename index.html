@@ -129,12 +129,11 @@
   }
   #text-color-input:hover { opacity: 1; }
 
-  /* ── Keep the menu, name and color dot in the same place relative to the ear ──
-     On a taller phone screen they move in with the ear instead of sticking to
-     the screen corners (74.28vw = 298.6px on a 402px-wide phone). */
+  /* ── Keep the menu and name in the same place relative to the ear ──
+     (The color dot stays at the bottom corner.) On a taller phone screen they move
+     in with the ear instead of sticking to the screen corners (74.28vw = 298.6px on a 402px-wide phone). */
   .corner-nav { top: max(2.4rem, calc(50vh - 74.28vw)); }
   .site-name { bottom: max(2.4rem, calc(50vh - 74.28vw)); }
-  #color-picker-wrap { bottom: max(2.4rem, calc(50vh - 74.28vw)); }
 
   /* ── Color swatch as a round dot (matches how iPhone draws it) ── */
   #text-color-input {
