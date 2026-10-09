@@ -70,10 +70,11 @@
     z-index: 1;
   }
   #ear-svg {
-    /* Size the ear from the screen width (2.012 × width, as on a 402×674 phone),
-       so every phone browser shows the same crop no matter how tall its window is.
+    /* Size the ear from the screen width (2.0328 × width, i.e. 120% of the
+       402×681 iPhone screen the original design was made on), so every phone
+       browser shows the same crop no matter how tall its window is.
        On wide screens the 120vh limit takes over. */
-    height: min(201.2vw, 120vh);
+    height: min(203.28vw, 120vh);
     width: auto;
     overflow: visible;
     display: block;
@@ -131,14 +132,16 @@
 
   /* ── Keep the menu and name in the same place relative to the ear ──
      (The color dot stays at the bottom corner.) On a taller phone screen they move
-     in with the ear instead of sticking to the screen corners (74.28vw = 298.6px on a 402px-wide phone). */
-  .corner-nav { top: max(2.4rem, calc(50vh - 74.28vw)); }
-  .site-name { bottom: max(2.4rem, calc(50vh - 74.28vw)); }
+     in with the ear instead of sticking to the screen corners (75.15vw = 302.1px on a 402px-wide phone). */
+  .corner-nav { top: max(2.4rem, calc(50vh - 75.15vw)); }
+  .site-name { bottom: max(2.4rem, calc(50vh - 75.15vw)); }
 
   /* ── Color swatch as a round dot (matches how iPhone draws it) ── */
   #text-color-input {
     -webkit-appearance: none; appearance: none;
-    width: 14px; height: 14px; border-radius: 50%; overflow: hidden;
+    /* 18px box with a 14px dot inside, as the iPhone draws it */
+    width: 18px; height: 18px; padding: 2px; box-sizing: border-box;
+    border: none; background: transparent;
   }
   #text-color-input::-webkit-color-swatch-wrapper { padding: 0; }
   #text-color-input::-webkit-color-swatch { border: none; border-radius: 50%; }

@@ -1,9 +1,9 @@
 // On a computer (mouse or trackpad, wide window), show the site exactly as it
-// looks on an iPhone: load this same page in a 402×674 "phone screen" and scale
+// looks on an iPhone: load this same page in a 430×681 "phone screen" and scale
 // that screen up to fill the window's height. Every size, line break and overlap
 // comes from the real phone layout, so the desktop view always matches it.
 (function () {
-  var PHONE_W = 430, PHONE_H = 674; // the virtual screen shown on computers (a little wider than a 402×674 iPhone)
+  var PHONE_W = 430, PHONE_H = 681; // the virtual screen shown on computers (a little wider than a 402×681 iPhone)
   var isComputer = window.matchMedia(
     "(min-width: 768px) and (hover: hover) and (pointer: fine)"
   ).matches;
@@ -21,8 +21,8 @@
       // Desktop bio: a touch smaller than on the phone (12px instead of 13px),
       // with its width scaled to match, so the line breaks stay the same.
       ".bio-text{font-size:12px!important;max-width:294.3px!important}" +
-      // Desktop color dot: a touch smaller (12px instead of 14px).
-      "#text-color-input{width:12px!important;height:12px!important}";
+      // Desktop color dot: a touch smaller (12px dot instead of 14px).
+      "#text-color-input{width:16px!important;height:16px!important}";
     document.head.appendChild(noBar);
     return;
   }
