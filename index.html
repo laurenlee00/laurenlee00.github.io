@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="desktop-frame.js"></script>
 <title>Lauren Wooyoung Lee</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -144,24 +145,6 @@
   #text-color-input::-webkit-color-swatch { border: none; border-radius: 50%; }
   #text-color-input::-moz-color-swatch { border: none; border-radius: 50%; }
 
-  /* ── Desktop: show the phone layout, scaled up as one picture ──
-     Calibrated to an iPhone screen of 402×674. --u is one phone pixel, so the
-     column, ear crop, text and line breaks all match the phone exactly. */
-  @media (min-width: 768px) and (hover: hover) and (pointer: fine) {
-    :root { --u: calc(100vh / 674); --col: calc(402 * var(--u)); }
-    html { background: #fff; }
-    body { max-width: var(--col); margin: 0 auto; position: relative; min-height: 100vh; }
-    #landing { width: 100%; }
-    #ear-wrap { clip-path: inset(0 calc(50% - var(--col) / 2)); }
-    .site-name { bottom: calc(38.4 * var(--u)); left: calc(41.6 * var(--u)); font-size: calc(11 * var(--u)); }
-    .corner-nav { top: calc(38.4 * var(--u)); right: calc(41.6 * var(--u)); gap: calc(4.8 * var(--u)); }
-    .corner-nav a, .corner-nav-item { font-size: calc(11 * var(--u)); }
-    .page-section { padding: calc(44.8 * var(--u)) calc(41.6 * var(--u)) calc(64 * var(--u)); }
-    .bio-text { font-size: calc(13 * var(--u)); }
-    footer { padding: calc(32 * var(--u)) calc(44.8 * var(--u)); font-size: calc(10 * var(--u)); }
-    #color-picker-wrap { bottom: calc(38.4 * var(--u)); right: calc(50% - var(--col) / 2 + 41.6 * var(--u)); }
-    #text-color-input { width: calc(14 * var(--u)); height: calc(14 * var(--u)); }
-  }
 </style>
 </head>
 <body>
@@ -277,10 +260,7 @@
     // Get rendered font size in SVG units
     const renderedH = svg.getBoundingClientRect().height || (window.innerHeight * 1.2);
     const pxPerUnit = renderedH / 500;
-    // On desktop the ear is drawn larger, so its letters grow with it and the
-    // pattern of words around the ear matches the phone.
-    const earScale = window.matchMedia("(min-width: 768px) and (hover: hover) and (pointer: fine)").matches ? window.innerHeight / 674 : 1;
-    const fsSVG = 11 * earScale / pxPerUnit;
+    const fsSVG = 11 / pxPerUnit;
     const charSpacing = fsSVG * 0.65; // tight enough to fill full path length
 
     // Get original path d and split subpaths
