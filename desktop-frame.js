@@ -22,7 +22,7 @@
   // Hide the page's own content right away so the wide layout never flashes.
   var hide = document.createElement("style");
   hide.textContent =
-    "html,body{margin:0;height:100%;overflow:hidden;background:#fff}" +
+    "html,body{margin:0;height:100%;overflow:hidden;background:#fff;-webkit-font-smoothing:antialiased}" +
     "body>*:not(#phone-screen){display:none!important}" +
     "#phone-screen{position:fixed;top:0;border:0;background:#fff;" +
     "transform-origin:0 0;width:" + PHONE_W + "px;height:" + PHONE_H + "px}";

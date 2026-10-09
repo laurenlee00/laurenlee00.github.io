@@ -145,6 +145,9 @@
   #text-color-input::-webkit-color-swatch { border: none; border-radius: 50%; }
   #text-color-input::-moz-color-swatch { border: none; border-radius: 50%; }
 
+  /* Draw text with thin strokes on Macs, like iPhones do (macOS otherwise
+     thickens text, making the same font look bolder on a laptop). */
+  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 </style>
 </head>
 <body>

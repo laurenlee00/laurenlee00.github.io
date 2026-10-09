@@ -39,6 +39,9 @@
     opacity: 0.5;
   }
 
+  /* Draw text with thin strokes on Macs, like iPhones do (macOS otherwise
+     thickens text, making the same font look bolder on a laptop). */
+  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 </style>
 </head>
 <body>
