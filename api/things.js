@@ -14,8 +14,8 @@ const THINGS = [
     url: "https://www.simile.com/"
   },
   {
-    note: "Granola's Apple Watch launch. Limited bands from textile artist Nowshin Prenon (July 2026).",
-    url: "https://x.com/soleio/status/2082206247244399069?s=20"
+    note: "Granola sends beautifully designed spoons. Spoon from British industrial designer David Mellor's penultimate collection. (April 2026).",
+    url: "https://www.linkedin.com/feed/update/urn:li:share:7445767982384992257/"
   },
 ];
 
