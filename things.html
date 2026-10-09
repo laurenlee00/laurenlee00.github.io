@@ -118,7 +118,7 @@
   .thing-link:hover { opacity: 1; }
 
   /* ── Desktop: show the phone layout, scaled up as one picture (402×674 phone) ── */
-  @media (min-width: 768px) {
+  @media (min-width: 768px) and (hover: hover) and (pointer: fine) {
     :root { --u: calc(100vh / 674); }
     html { background: #fff; }
     body { max-width: calc(402 * var(--u)); margin: 0 auto; padding: calc(38.4 * var(--u)) calc(41.6 * var(--u)); }
