@@ -3,7 +3,7 @@
 // that screen up to fill the window's height. Every size, line break and overlap
 // comes from the real phone layout, so the desktop view always matches it.
 (function () {
-  var PHONE_W = 402, PHONE_H = 674;
+  var PHONE_W = 402, PHONE_H = 674; // the virtual screen shown on computers
   var isComputer = window.matchMedia(
     "(min-width: 768px) and (hover: hover) and (pointer: fine)"
   ).matches;
@@ -15,6 +15,10 @@
     var base = document.createElement("base");
     base.target = "_top";
     document.head.appendChild(base);
+    // No scrollbar inside the phone screen (phones don't show one either).
+    var noBar = document.createElement("style");
+    noBar.textContent = "html{scrollbar-width:none}html::-webkit-scrollbar{display:none}";
+    document.head.appendChild(noBar);
     return;
   }
   if (!isComputer) return; // phones and tablets get the page directly
