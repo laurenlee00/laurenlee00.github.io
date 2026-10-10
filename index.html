@@ -150,6 +150,8 @@
   /* Draw text with thin strokes on Macs, like iPhones do (macOS otherwise
      thickens text, making the same font look bolder on a laptop). */
   html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  /* Line breaks used only in the desktop view (see desktop-frame.js). */
+  .desk-br { display: none; }
 </style>
 </head>
 <body>
@@ -190,7 +192,7 @@
 <div id="scroll-space"></div>
 
 <section id="bio" class="page-section">
-  <p class="bio-text">I like to think I've always known how to read a room. As a choir kid, I trained my <strong>ear</strong> to know when a blend locks in, a similar negotiation to growing up across cultures in Hong Kong, New York, and Boston. At Harvard, I wrote 118 pages investigating 19th-century American domesticity through the lens of commercial advertising, and have spent my career since studying the technology and economics of everyday life.</p>
+  <p class="bio-text">I like to think I've always known how to <br class="desk-br">read a room. As a choir kid, I trained my <strong>ear</strong> to know when a blend locks in, a similar negotiation to growing up across cultures in Hong Kong, New York, and Boston. At Harvard, <br class="desk-br">I wrote 118 pages investigating 19th-century American domesticity through the lens of commercial advertising, and have spent my career since studying the technology and economics of everyday life.</p>
 </section>
 <footer><span>© <span id="yr"></span></span></footer>
 
