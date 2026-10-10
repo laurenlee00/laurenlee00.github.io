@@ -19,8 +19,8 @@
     var noBar = document.createElement("style");
     noBar.textContent = "html{scrollbar-width:none!important}html::-webkit-scrollbar{display:none!important}" +
       // Desktop bio: a touch smaller than on the phone (12px instead of 13px),
-      // with its width scaled to match, so the line breaks stay the same.
-      ".bio-text{font-size:12px!important;max-width:294.3px!important}" +
+      // running the full width of the column (same margin on both sides).
+      ".bio-text{font-size:12px!important}" +
       // Desktop color dot: a touch smaller (12px dot instead of 14px).
       "#text-color-input{width:16px!important;height:16px!important}";
     document.head.appendChild(noBar);
