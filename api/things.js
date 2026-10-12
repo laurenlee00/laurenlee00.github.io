@@ -16,8 +16,8 @@ const THINGS = [
     url: "https://x.com/alexandr_wang/status/2103551714536439951"
   },
   {
-    note: "Ramp expands to the UK with an apology in the papers. (September 2026).",
-    url: "https://x.com/tryramp/status/2099864815933997293"
+    note: "Ramp sends a 40\" pair of red-handled scissors to customer originally incorporated as Red Scissor, Inc. (September 2026).",
+    url: "https://x.com/sahirjaggi/status/2103541334841962519"
   },
   {
     note: "Dario shares a personal blog post. (September 2026).",
