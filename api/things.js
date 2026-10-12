@@ -48,7 +48,7 @@ const SECOND_LIST = [
     url: "https://x.com/mercury/status/2108230314921451832"
   },
   {
-    note: "Jared Kushner shares a blog post in response to aggregate of fake news. (October 2026).",
+    note: "Jared Kushner responds in blog post to aggregate of fake news. (October 2026).",
     url: "https://jaredkushner.com/posts/new-yorker-response/"
   },
   {
