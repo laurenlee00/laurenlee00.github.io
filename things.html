@@ -153,6 +153,15 @@
 
   function render(things) {
     list.textContent = "";
+    if (!things.length) {
+      // A list with nothing in it yet.
+      const empty = document.createElement("div");
+      empty.className = "thing";
+      empty.style.opacity = "0.5";
+      empty.textContent = "More soon.";
+      list.appendChild(empty);
+      return;
+    }
     things.forEach(item => {
       const div = document.createElement("div");
       div.className = "thing";

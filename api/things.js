@@ -1,6 +1,8 @@
-// Serves the Things list only to visitors who send the right password.
-// The password lives in a Vercel environment variable (THINGS_PASSWORD),
-// so it never appears in the page source.
+// Serves a Things list only to visitors who send a matching password.
+// Each list has its own password, kept in a Vercel environment variable,
+// so no password ever appears in the page source:
+//   THINGS_PASSWORD   → THINGS        (the main list)
+//   THINGS_PASSWORD_2 → SECOND_LIST   (the separate list)
 const crypto = require("crypto");
 
 // ── Things — add new items at the TOP ──
@@ -19,6 +21,16 @@ const THINGS = [
   },
 ];
 
+// ── Second list — add new items at the TOP (same format as above) ──
+const SECOND_LIST = [
+];
+
+// Which password opens which list.
+const LISTS = [
+  { envVar: "THINGS_PASSWORD", items: THINGS },
+  { envVar: "THINGS_PASSWORD_2", items: SECOND_LIST },
+];
+
 function matches(given, expected) {
   // Compare hashes so the check takes the same time whatever is typed.
   const a = crypto.createHash("sha256").update(String(given)).digest();
@@ -34,15 +46,22 @@ module.exports = (req, res) => {
     return res.status(405).json({ error: "method not allowed" });
   }
 
-  const expected = process.env.THINGS_PASSWORD;
-  if (!expected) {
-    return res.status(500).json({ error: "THINGS_PASSWORD is not set" });
+  const given = (req.body && req.body.password) || "";
+  let found = null;
+  let anyConfigured = false;
+  // Check every list (no early exit) so the response time doesn't hint at which matched.
+  for (const list of LISTS) {
+    const expected = process.env[list.envVar];
+    if (!expected) continue;
+    anyConfigured = true;
+    if (matches(given, expected) && !found) found = list.items;
   }
 
-  const given = (req.body && req.body.password) || "";
-  if (!matches(given, expected)) {
+  if (!anyConfigured) {
+    return res.status(500).json({ error: "no Things password is set" });
+  }
+  if (!found) {
     return res.status(401).json({ error: "wrong password" });
   }
-
-  return res.status(200).json({ things: THINGS });
+  return res.status(200).json({ things: found });
 };
