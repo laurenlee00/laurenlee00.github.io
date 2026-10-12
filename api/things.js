@@ -36,6 +36,10 @@ const SECOND_LIST = [
     url: "https://x.com/MistralAI/status/2107457414387622310"
   },
   {
+    note: "Material Album's User Experience gallery presented by Forerunner. (October 2026).",
+    url: "https://userexperience.place/"
+  },
+  {
     note: "Ghost.ai invites people IRL into their factory and then launches and sells out of first batch in 8 hours. (October 2026).",
     url: "https://x.com/zainmfj/status/2107270812051055001"
   },
