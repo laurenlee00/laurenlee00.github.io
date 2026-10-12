@@ -76,6 +76,10 @@ const SECOND_LIST = [
     url: "https://x.com/alexandr_wang/status/2103551714536439951"
   },
   {
+    note: "Ramp sends a 40\" pair of red-handled scissors to customer originally incorporated as Red Scissor, Inc. (September 2026).",
+    url: "https://x.com/sahirjaggi/status/2103541334841962519"
+  },
+  {
     note: "Corridor paints SMB pains with American health insurance in launch video. (September 2026).",
     url: "https://www.linkedin.com/feed/update/urn:li:activity:7507831338272743424/"
   },
