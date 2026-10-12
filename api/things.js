@@ -23,6 +23,78 @@ const THINGS = [
 
 // ── Second list — add new items at the TOP (same format as above) ──
 const SECOND_LIST = [
+  {
+    note: "Mercury takes over GCS Gallery with collection of founder-selected books. (October 2026).",
+    url: "https://x.com/mercury/status/2108230314921451832"
+  },
+  {
+    note: "Drinking the Nous Research kool-aid. (October 2026).",
+    url: "https://x.com/NousResearch/status/2108005475895701712"
+  },
+  {
+    note: "Ghost.ai invites people IRL into their factory and then launches and sells out of first batch in 8 hours. (October 2026).",
+    url: "https://x.com/zainmfj/status/2107270812051055001"
+  },
+  {
+    note: "Mistral launches “Le Chonk” model leaning into a meme from June. (October 2026).",
+    url: "https://x.com/MistralAI/status/2107457414387622310"
+  },
+  {
+    note: "OpenAI introduces another cute, furry agent face. (September 2026).",
+    url: "https://openai.com/index/introducing-dots/"
+  },
+  {
+    note: "Alexandr Wang releases Meta Muse Manifesto on the declaration of “wanting”. 1000s+ of memes to follow. (September 2026).",
+    url: "https://x.com/alexandr_wang/status/2103551714536439951"
+  },
+  {
+    note: "Corridor paints SMB pains with American health insurance in launch video. (September 2026).",
+    url: "https://www.linkedin.com/feed/update/urn:li:activity:7507831338272743424/"
+  },
+  {
+    note: "Harvey launches first TV commercial and newspaper ad. (September 2026).",
+    url: "https://www.youtube.com/watch?v=te-BV-wj6_E"
+  },
+  {
+    note: "Ramp expands to the UK with an apology in the papers. (September 2026).",
+    url: "https://x.com/tryramp/status/2099864815933997293"
+  },
+  {
+    note: "Dario shares a personal blog post. (September 2026).",
+    url: "https://x.com/DarioAmodei/status/2098773920774074715"
+  },
+  {
+    note: "Duolingo releases NYFW collection with commonly mispronounced luxury fashion brands. (September 2026).",
+    url: "https://lnkd.in/p/gW_HVfGh"
+  },
+  {
+    note: "Terrain's History Museum. How will we increasingly derive value from things with distinct physicality? (September 2026).",
+    url: "https://www.terrain.com/history"
+  },
+  {
+    note: "Granola launches on Apple Watch with a limited-edition strap by textile artist Nowshin Prenon. (July 2026).",
+    url: "https://www.granola.ai/blog/granola-for-apple-watch"
+  },
+  {
+    note: "The Simulation Company's Series B announcement. Brand identity reveal with new logo and website ft. BTF “Sims” game (July 2026).",
+    url: "https://www.simile.com/"
+  },
+  {
+    note: "Tomo anchors launch in everyday capturing founder's brother in launch video with physical branded merch and Tomosapiens digital world. (June 2026).",
+    url: "https://x.com/justoutquan/status/2070175262973862077"
+  },
+  {
+    note: "Spotify started discomorphism and Google followed. (May 2026).",
+    url: "https://x.com/ssamat/status/2057831639275983293"
+  },
+  {
+    note: "$BIRD stays in the family from Allbirds to Smartbird.",
+    url: "https://www.morningbrew.com/stories/allbirds-announces-pivot-ai-after-selling-assets"
+  },
+  {
+    note: "Granola gifts “beautifully designed spoons”. Spoon from British industrial designer David Mellor's penultimate collection. (April 2026).",
+    url: "https://www.linkedin.com/feed/update/urn:li:share:7445767982384992257/"
+  },
 ];
 
 // Which password opens which list.
