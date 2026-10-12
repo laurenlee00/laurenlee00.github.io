@@ -84,12 +84,12 @@ const SECOND_LIST = [
     url: "https://x.com/justoutquan/status/2070175262973862077"
   },
   {
-    note: "Spotify started discomorphism and Google followed. (May 2026).",
-    url: "https://x.com/ssamat/status/2057831639275983293"
+    note: "$BIRD stays in the family from Allbirds to Smartbird. (June 2026).",
+    url: "https://www.morningbrew.com/stories/allbirds-announces-pivot-ai-after-selling-assets"
   },
   {
-    note: "$BIRD stays in the family from Allbirds to Smartbird.",
-    url: "https://www.morningbrew.com/stories/allbirds-announces-pivot-ai-after-selling-assets"
+    note: "Spotify started discomorphism and Google followed. (May 2026).",
+    url: "https://x.com/ssamat/status/2057831639275983293"
   },
   {
     note: "Granola gifts “beautifully designed spoons”. Spoon from British industrial designer David Mellor's penultimate collection. (April 2026).",
