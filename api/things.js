@@ -8,12 +8,32 @@ const crypto = require("crypto");
 // ── Things — add new items at the TOP ──
 const THINGS = [
   {
+    note: "Mistral launches “Le Chonk” model leaning into a meme from June. (October 2026).",
+    url: "https://x.com/MistralAI/status/2107457414387622310"
+  },
+  {
+    note: "Alexandr Wang releases Meta Muse Manifesto on the declaration of “wanting”. 1000s+ of memes to follow. (September 2026).",
+    url: "https://x.com/alexandr_wang/status/2103551714536439951"
+  },
+  {
+    note: "Ramp expands to the UK with an apology in the papers. (September 2026).",
+    url: "https://x.com/tryramp/status/2099864815933997293"
+  },
+  {
+    note: "Dario shares a personal blog post. (September 2026).",
+    url: "https://x.com/DarioAmodei/status/2098773920774074715"
+  },
+  {
     note: "Terrain's History Museum. How will we increasingly derive value from things with distinct physicality? (September 2026).",
     url: "https://www.terrain.com/history"
   },
   {
     note: "The Simulation Company's Series B announcement. Brand identity reveal with new logo and website ft. BTF “Sims” game (July 2026).",
     url: "https://www.simile.com/"
+  },
+  {
+    note: "$BIRD stays in the family from Allbirds to Smartbird. (June 2026).",
+    url: "https://www.morningbrew.com/stories/allbirds-announces-pivot-ai-after-selling-assets"
   },
   {
     note: "Granola gifts “beautifully designed spoons”. Spoon from British industrial designer David Mellor's penultimate collection. (April 2026).",
