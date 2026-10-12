@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="desktop-frame.js"></script>
+<title>Beyond — Lauren Wooyoung Lee</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fragment+Mono:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: #fff;
+    color: #0a0a0a;
+    font-family: "Fragment Mono", monospace;
+    min-height: 100vh;
+  }
+  body {
+    padding: 2.4rem 2.6rem;
+  }
+  .back {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #0a0a0a;
+    opacity: 0.35;
+    transition: opacity 0.2s;
+    display: block;
+    margin-bottom: 2rem;
+  }
+  .back:hover { opacity: 1; }
+  .soon {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #0a0a0a;
+    opacity: 0.5;
+  }
+
+  /* Draw text with thin strokes on Macs, like iPhones do (macOS otherwise
+     thickens text, making the same font look bolder on a laptop). */
+  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+</style>
+</head>
+<body>
+  <a href="index.html" class="back">← Back</a>
+  <p class="soon">More Soon.</p>
+</body>
+</html>
