@@ -32,12 +32,12 @@ const SECOND_LIST = [
     url: "https://x.com/NousResearch/status/2108005475895701712"
   },
   {
-    note: "Ghost.ai invites people IRL into their factory and then launches and sells out of first batch in 8 hours. (October 2026).",
-    url: "https://x.com/zainmfj/status/2107270812051055001"
-  },
-  {
     note: "Mistral launches “Le Chonk” model leaning into a meme from June. (October 2026).",
     url: "https://x.com/MistralAI/status/2107457414387622310"
+  },
+  {
+    note: "Ghost.ai invites people IRL into their factory and then launches and sells out of first batch in 8 hours. (October 2026).",
+    url: "https://x.com/zainmfj/status/2107270812051055001"
   },
   {
     note: "OpenAI introduces another cute, furry agent face. (September 2026).",
