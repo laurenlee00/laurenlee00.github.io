@@ -28,7 +28,7 @@ const THINGS = [
     url: "https://www.terrain.com/history"
   },
   {
-    note: "The Simulation Company's Series B announcement. Brand identity reveal with new logo and website ft. BTF “Sims” game (July 2026).",
+    note: "The Simulation Company's Series B announcement. Brand identity reveal with new logo and website ft. BTF Smallville game (July 2026).",
     url: "https://www.simile.com/"
   },
   {
@@ -120,7 +120,7 @@ const SECOND_LIST = [
     url: "https://www.granola.ai/blog/granola-for-apple-watch"
   },
   {
-    note: "The Simulation Company's Series B announcement. Brand identity reveal with new logo and website ft. BTF “Sims” game (July 2026).",
+    note: "The Simulation Company's Series B announcement. Brand identity reveal with new logo and website ft. BTF Smallville game (July 2026).",
     url: "https://www.simile.com/"
   },
   {
