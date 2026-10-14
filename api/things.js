@@ -44,7 +44,7 @@ const THINGS = [
 // ── Second list — add new items at the TOP (same format as above) ──
 const SECOND_LIST = [
   {
-    note: "Mercury releases re-designed and re-issued version of Luca Pacioli's trans. articularis de Computis et Scripturis on double-entry bookkeeping. (October 2026).",
+    note: "Mercury Books (accounting layer) releases re-designed and re-issued version of Luca Pacioli’s trans. “Particularis de Computis et Scripturis” on double-entry bookkeeping. (October 2026).",
     url: "https://x.com/mercury/status/2110092367076401165"
   },
   {
