@@ -44,6 +44,10 @@ const THINGS = [
 // ── Second list — add new items at the TOP (same format as above) ──
 const SECOND_LIST = [
   {
+    note: "Mercury releases re-designed and re-issued version of Luca Pacioli's trans. articularis de Computis et Scripturis on double-entry bookkeeping. (October 2026).",
+    url: "https://x.com/mercury/status/2110092367076401165"
+  },
+  {
     note: "World-building with ramp-rider Tony Hawk. (October 2026).",
     url: "https://x.com/eglyman/status/2110429743195586737"
   },
