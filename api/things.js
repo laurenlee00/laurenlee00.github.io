@@ -44,6 +44,14 @@ const THINGS = [
 // ── Second list — add new items at the TOP (same format as above) ──
 const SECOND_LIST = [
   {
+    note: "World-building with ramp-rider Tony Hawk. (October 2026).",
+    url: "https://x.com/eglyman/status/2110429743195586737"
+  },
+  {
+    note: "Baseten fed me an ad on their 8-month old 256-page paperback on inference. (October 2026).",
+    url: "https://books.baseten.com/products/inference-engineering"
+  },
+  {
     note: "Mercury takes over GCS Gallery with collection of founder-selected books. (October 2026).",
     url: "https://x.com/mercury/status/2108230314921451832"
   },
