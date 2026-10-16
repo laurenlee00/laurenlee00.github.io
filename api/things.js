@@ -45,7 +45,7 @@ const THINGS = [
 const SECOND_LIST = [
   {
     note: "Flying-car stunt reminds us that Tesla is a frontier business. (October 2026).",
-    url: "https://x.com/KanekoaTheGreat/status/2110901067139735700"
+    url: "https://x.com/Tesla/status/2110913438293647789"
   },
   {
     note: "Zuck willingly drinks a Guinness. (October 2026).",
