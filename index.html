@@ -152,6 +152,12 @@
   html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
   /* Line breaks used only in the desktop view (see desktop-frame.js). */
   .desk-br { display: none; }
+  /* ── Email / LinkedIn arrows in the menu: bigger glyph, bigger tap area ── */
+  .corner-nav a.nav-arrow {
+    font-size: 15px; line-height: 1;
+    padding: 6px 0 6px 22px;   /* invisible extra space around the arrow to tap */
+    margin: -2px 0;            /* keep the menu compact without the tap areas overlapping */
+  }
 </style>
 </head>
 <body>
@@ -162,8 +168,8 @@
     <!-- Community link hidden for now (Oct 2026). The page is still in community.html; restore with:
     <a href="community.html">Community</a> -->
     <a href="beyond.html">Beyond</a>
-    <a href="mailto:laurenlee00@gmail.com" aria-label="Email" title="Email">↗</a>
-    <a href="https://www.linkedin.com/in/laurenwlee/" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">↗</a>
+    <a class="nav-arrow" href="mailto:laurenlee00@gmail.com" aria-label="Email" title="Email">↗</a>
+    <a class="nav-arrow" href="https://www.linkedin.com/in/laurenwlee/" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">↗</a>
   </nav>
   <div id="ear-wrap">
     <svg id="ear-svg" viewBox="0 0 319 500" preserveAspectRatio="xMidYMid meet"
