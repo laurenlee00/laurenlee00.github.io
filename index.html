@@ -152,12 +152,6 @@
   html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
   /* Line breaks used only in the desktop view (see desktop-frame.js). */
   .desk-br { display: none; }
-  /* ── Contact (email) and More (LinkedIn) links under the bio ── */
-  #bio { padding-bottom: 1rem; }  /* bring the © line closer to the links */
-  .contact-links { display: flex; gap: 1.1rem; margin-top: 3.2rem; font-size: 13px; letter-spacing: 0.01em; }
-  .contact-links a { color: #bbb; text-decoration: none; transition: color 0.2s; }  /* same grey as the © line */
-  .contact-links a span { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
-  .contact-links a:hover { color: #777; }
 </style>
 </head>
 <body>
@@ -168,6 +162,8 @@
     <!-- Community link hidden for now (Oct 2026). The page is still in community.html; restore with:
     <a href="community.html">Community</a> -->
     <a href="beyond.html">Beyond</a>
+    <a href="mailto:laurenlee00@gmail.com" aria-label="Email" title="Email">↗</a>
+    <a href="https://www.linkedin.com/in/laurenwlee/" target="_blank" rel="noopener" aria-label="LinkedIn" title="LinkedIn">↗</a>
   </nav>
   <div id="ear-wrap">
     <svg id="ear-svg" viewBox="0 0 319 500" preserveAspectRatio="xMidYMid meet"
@@ -199,10 +195,6 @@
 
 <section id="bio" class="page-section">
   <p class="bio-text">I like to think I've always known how to <br class="desk-br">read a room. As a choir kid, I trained my <strong>ear</strong> to know when a blend locks in, a similar negotiation to growing up across cultures in Hong Kong, New York, and Boston. At Harvard, <br class="desk-br">I wrote 118 pages investigating 19th-century American domesticity through the lens of commercial advertising, and have spent my career since studying the technology and economics of everyday life.</p>
-  <div class="contact-links">
-    <a href="mailto:laurenlee00@gmail.com"><span>Contact</span> ↗</a>
-    <a href="https://www.linkedin.com/in/laurenwlee/" target="_blank" rel="noopener"><span>More</span> ↗</a>
-  </div>
 </section>
 <footer><span>© <span id="yr"></span></span></footer>
 

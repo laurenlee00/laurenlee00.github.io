@@ -21,7 +21,6 @@
       // Desktop bio: a touch smaller than on the phone (12px instead of 13px),
       // running the full width of the column (same margin on both sides).
       ".bio-text{font-size:12px!important}" +
-      ".contact-links{font-size:12px!important}" +
       // Desktop-only line breaks in the bio (hidden on phones).
       ".desk-br{display:inline!important}" +
       // Desktop color dot: a touch smaller (12px dot instead of 14px).
