@@ -344,8 +344,13 @@
     const gap = 1.4 * 16;                                   // space between heading and bio
     const headingY = bioText.getBoundingClientRect().top - siteName.offsetHeight - gap;
     // With "reduce motion" on, the name just scrolls away with the page like normal text.
-    const y = reduceMotion ? startY - window.scrollY
-                           : Math.min(startY + 0.45 * window.scrollY, headingY);  // drift down, then ride with the bio
+    // Glide quickly down to a resting spot just below the middle (reached after half a
+    // screen of scrolling, while the ear has barely started unraveling), wait there,
+    // then ride up with the bio once it arrives.
+    const restY = window.innerHeight * 0.55;
+    const t = Math.min(1, window.scrollY / (window.innerHeight * 0.5));
+    const glide = startY + (restY - startY) * (1 - (1 - t) * (1 - t));   // ease-out
+    const y = reduceMotion ? startY - window.scrollY : Math.min(glide, headingY);
     siteName.style.transform = `translateY(${y}px)`;
   }
   window.addEventListener("scroll", placeName, { passive: true });
