@@ -137,6 +137,7 @@
   /* ── Name: starts top-left (level with the menu), drifts down as you scroll,
      and lands as the heading above the bio (see placeName() below) ── */
   .site-name { position: fixed; top: 0; bottom: auto; will-change: transform; }
+  html, body { overscroll-behavior: none; }  /* no rubber-band bounce at the page ends */
   .bio-text { margin-top: 2.2rem; }  /* room for the name as a heading */
 
   /* ── Color swatch as a round dot (matches how iPhone draws it) ── */
@@ -348,12 +349,18 @@
     // screen of scrolling, while the ear has barely started unraveling), wait there,
     // then ride up with the bio once it arrives.
     const restY = window.innerHeight * 0.55;
-    const t = Math.min(1, window.scrollY / (window.innerHeight * 0.5));
+    // Clamp to the real page range so iOS/trackpad overscroll can't push the name around.
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const sy = Math.min(Math.max(window.scrollY, 0), maxScroll);
+    const t = Math.min(1, sy / (window.innerHeight * 0.5));
     const glide = startY + (restY - startY) * (1 - (1 - t) * (1 - t));   // ease-out
-    const y = reduceMotion ? startY - window.scrollY : Math.min(glide, headingY);
+    const y = reduceMotion ? startY - sy : Math.min(glide, headingY);
     siteName.style.transform = `translateY(${y}px)`;
   }
-  window.addEventListener("scroll", placeName, { passive: true });
+  let nameFrame = 0;
+  window.addEventListener("scroll", () => {
+    if (!nameFrame) nameFrame = requestAnimationFrame(() => { nameFrame = 0; placeName(); });
+  }, { passive: true });
   window.addEventListener("resize", placeName);
   placeName();
   window.addEventListener("load", () => { buildLetters(); onScroll(); placeName(); });
