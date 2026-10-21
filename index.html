@@ -134,7 +134,10 @@
      (The color dot stays at the bottom corner.) On a taller phone screen they move
      in with the ear instead of sticking to the screen corners (75.15vw = 302.1px on a 402px-wide phone). */
   .corner-nav { top: max(2.4rem, calc(50vh - 75.15vw)); }
-  .site-name { bottom: max(2.4rem, calc(50vh - 75.15vw)); font-weight: 700; }
+  /* ── Name: starts top-left (level with the menu), drifts down as you scroll,
+     and lands as the heading above the bio (see placeName() below) ── */
+  .site-name { position: fixed; top: 0; bottom: auto; font-weight: 700; will-change: transform; }
+  .bio-text { margin-top: 2.2rem; }  /* room for the name as a heading */
 
   /* ── Color swatch as a round dot (matches how iPhone draws it) ── */
   #text-color-input {
@@ -331,7 +334,24 @@
   }
 
   window.addEventListener("scroll", onScroll, {passive: true});
-  window.addEventListener("load", () => { buildLetters(); onScroll(); });
+  // ── Name: drift down while the page scrolls up, then ride along as the bio's heading ──
+  const siteName = document.querySelector(".site-name");
+  const bioText = document.querySelector(".bio-text");
+  const navMenu = document.querySelector(".corner-nav");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function placeName() {
+    const startY = navMenu.offsetTop;                       // level with the menu
+    const gap = 1.4 * 16;                                   // space between heading and bio
+    const headingY = bioText.getBoundingClientRect().top - siteName.offsetHeight - gap;
+    // With "reduce motion" on, the name just scrolls away with the page like normal text.
+    const y = reduceMotion ? startY - window.scrollY
+                           : Math.min(startY + 0.45 * window.scrollY, headingY);  // drift down, then ride with the bio
+    siteName.style.transform = `translateY(${y}px)`;
+  }
+  window.addEventListener("scroll", placeName, { passive: true });
+  window.addEventListener("resize", placeName);
+  placeName();
+  window.addEventListener("load", () => { buildLetters(); onScroll(); placeName(); });
   window.addEventListener("resize", buildLetters);
 </script>
 
