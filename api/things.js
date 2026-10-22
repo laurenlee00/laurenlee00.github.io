@@ -56,7 +56,7 @@ const SECOND_LIST = [
     url: "https://www.natural.com/blog"
   },
   {
-    note: "Cognition features sepia-toned Team Spotlights revealing individual stories and insights into company culture. (October 2026).",
+    note: "Cognition publishes sepia-toned Team Spotlights with insight into company culture. (October 2026).",
     url: "https://cognition.com/team-spotlights"
   },
   {
