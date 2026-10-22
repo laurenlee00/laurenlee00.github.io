@@ -52,7 +52,7 @@ const SECOND_LIST = [
     url: "https://x.com/stratechery/status/2112962641643876475"
   },
   {
-    note: "Cognition's new team feature reminded me of Natural's individual team announcements as personal narrative on motivation. (October 2026).",
+    note: "Cognition's team features reminded me of Natural's teammate announcements as personal narrative on motivation. (October 2026).",
     url: "https://www.natural.com/blog"
   },
   {
