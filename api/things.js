@@ -44,6 +44,30 @@ const THINGS = [
 // ── Second list — add new items at the TOP (same format as above) ──
 const SECOND_LIST = [
   {
+    note: "a16z Crypto rebrands and expands to the Frontier. (October 2026).",
+    url: "https://x.com/cdixon/status/2113299399254176221"
+  },
+  {
+    note: "Stratechery is, starting from today, presented by Stripe. (October 2026).",
+    url: "https://x.com/stratechery/status/2112962641643876475"
+  },
+  {
+    note: "Cognition's new team feature reminded me of Natural's individual team announcements as personal narrative on motivation. (October 2026).",
+    url: "https://www.natural.com/blog"
+  },
+  {
+    note: "Cognition features sepia-toned Team Spotlights revealing personal stories and insights into company culture. (October 2026).",
+    url: "https://cognition.com/team-spotlights"
+  },
+  {
+    note: "Monaco sends $100 bills to prospective clients. (October 2026).",
+    url: "https://x.com/shangbingjiang/status/2112318753983574098"
+  },
+  {
+    note: "There's a lot of commentary on Palantir's merch, and I most agree with @fudge. (October 2026).",
+    url: "https://x.com/fudgeposting/status/2110391728398037261"
+  },
+  {
     note: "Flying-car stunt reminds us that Tesla is a frontier business. (October 2026).",
     url: "https://x.com/Tesla/status/2110913438293647789"
   },
