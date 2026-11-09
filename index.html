@@ -46,6 +46,7 @@
     flex-direction: column;
     align-items: flex-end;
     gap: 0.3rem;
+    opacity: 0;   /* hidden on the landing; placeNav() eases it in at the bio */
   }
   .corner-nav a, .corner-nav-item {
     font-size: 11px;
@@ -356,13 +357,24 @@
     const y = reduceMotion ? startY - sy : Math.min(glide, headingY);
     siteName.style.transform = `translateY(${y}px)`;
   }
+  // ── Nav: the landing is just the name — the menu stays out of sight through the
+  //    whole scroll and eases in only once, as the bio settles into its reading state. ──
+  function placeNav() {
+    if (reduceMotion) { navMenu.style.opacity = "1"; navMenu.style.pointerEvents = "auto"; return; }
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    if (maxScroll <= 0) { navMenu.style.opacity = "1"; navMenu.style.pointerEvents = "auto"; return; }
+    const p = Math.min(Math.max(window.scrollY, 0), maxScroll) / maxScroll;
+    const back = Math.min(Math.max((p - 0.82) / 0.18, 0), 1);  // appears only as the bio arrives
+    navMenu.style.opacity = back.toFixed(3);
+    navMenu.style.pointerEvents = back < 0.05 ? "none" : "auto";
+  }
   let nameFrame = 0;
   window.addEventListener("scroll", () => {
-    if (!nameFrame) nameFrame = requestAnimationFrame(() => { nameFrame = 0; placeName(); });
+    if (!nameFrame) nameFrame = requestAnimationFrame(() => { nameFrame = 0; placeName(); placeNav(); });
   }, { passive: true });
-  window.addEventListener("resize", placeName);
-  placeName();
-  window.addEventListener("load", () => { buildLetters(); onScroll(); placeName(); });
+  window.addEventListener("resize", () => { placeName(); placeNav(); });
+  placeName(); placeNav();
+  window.addEventListener("load", () => { buildLetters(); onScroll(); placeName(); placeNav(); });
   window.addEventListener("resize", buildLetters);
 </script>
 
