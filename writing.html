@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<script src="desktop-frame.js"></script>
+<title>Writing — Lauren Wooyoung Lee</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fragment+Mono:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: #fff;
+    color: #0a0a0a;
+    font-family: "Fragment Mono", monospace;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+  body {
+    padding: 2.4rem 2.6rem;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  main {
+    padding-bottom: 4rem;
+  }
+
+  .back {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #0a0a0a;
+    opacity: 0.35;
+    transition: opacity 0.2s;
+    display: block;
+    margin-bottom: 2rem;
+  }
+  .back:hover { opacity: 1; }
+
+  .writing-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem;
+    max-width: 640px;
+  }
+
+  .piece {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    line-height: 1.7;
+    text-transform: uppercase;
+  }
+
+  .piece-title {
+    transition: opacity 0.2s;
+  }
+  .piece-title:hover { opacity: 0.35; }
+
+  .piece-date {
+    opacity: 0.35;
+    margin-left: 0.6rem;
+  }
+
+  .piece-note {
+    opacity: 0.35;
+    margin-top: 0.4rem;
+  }
+
+  .more {
+    display: inline-block;
+    margin-top: 3.4rem;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.35;
+    transition: opacity 0.2s;
+  }
+  .more:hover { opacity: 1; }
+
+  /* Draw text with thin strokes on Macs, like iPhones do (macOS otherwise
+     thickens text, making the same font look bolder on a laptop). */
+  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+</style>
+</head>
+<body>
+
+<main>
+  <a class="back" href="index.html">← Back</a>
+  <div class="writing-list" id="writing-list"></div>
+  <a class="more" href="https://substack.com/@laurenwlee" target="_blank" rel="noopener">Read everything on Substack →</a>
+</main>
+
+<script>
+  // ── Writing — selected pieces. Add new ones at the TOP. ──
+  const WRITINGS = [
+    {
+      title: "When life is a game, sell a newspaper.",
+      note: "Some legitimate headlines and the only tech biopic I want to talk about.",
+      date: "October 2026",
+      url: "https://specifications.substack.com/p/when-life-is-a-game-sell-a-newspaper"
+    },
+    {
+      title: "The Economics of Moving Slow",
+      note: "On the joys of roasting, brewing, Blue Bottle's future, and a little homage to the slow in the speed of AI.",
+      date: "April 2026",
+      url: "https://laurenwlee.substack.com/p/the-economics-of-moving-slow"
+    },
+    {
+      title: "Bro, it's me!",
+      note: "On the cosmetics of a font, (type)face, frame.",
+      date: "June 2026",
+      url: "https://specifications.substack.com/p/bro-its-me"
+    },
+    {
+      title: "Are we stuck in a Fool's Game?",
+      note: "On coding companions and the continued consumer AI palooza.",
+      date: "May 2026",
+      url: "https://specifications.substack.com/p/are-we-stuck-in-a-fools-game"
+    },
+    {
+      title: "A Note on Regeneration",
+      note: "And how aggregation of the past may help us better understand what it will take to innovate for the consumer.",
+      date: "November 2025",
+      url: "https://laurenwlee.substack.com/p/a-note-on-regeneration"
+    },
+    {
+      title: "Tteok, Tteok, Goose!",
+      note: "In pursuit of Fall, impeccable taste, and hyper-specialization fit with many cups of coffee.",
+      date: "October 2025",
+      url: "https://laurenwlee.substack.com/p/non-perishables-008-tteok-tteok-goose"
+    },
+    {
+      title: "Tech Merch is Alive and Well",
+      note: "On status-making in the age of AI.",
+      date: "October 2025",
+      url: "https://laurenwlee.substack.com/p/tech-merch-is-alive-and-well"
+    },
+    {
+      title: "A Note on the Luxury of Time",
+      note: "Your friendly Historian has returned in August's return to our State of Spring.",
+      date: "September 2025",
+      url: "https://laurenwlee.substack.com/p/a-note-on-the-luxury-of-time"
+    },
+  ];
+
+  const list = document.getElementById("writing-list");
+  WRITINGS.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "piece";
+
+    const title = document.createElement("a");
+    title.className = "piece-title";
+    title.href = item.url;
+    title.target = "_blank";
+    title.rel = "noopener";
+    title.textContent = item.title;
+
+    const date = document.createElement("span");
+    date.className = "piece-date";
+    date.textContent = item.date;
+
+    const line = document.createElement("div");
+    line.append(title, date);
+
+    const note = document.createElement("div");
+    note.className = "piece-note";
+    note.textContent = item.note;
+
+    div.append(line, note);
+    list.appendChild(div);
+  });
+</script>
+</body>
+</html>
