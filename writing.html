@@ -11,75 +11,61 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html, body {
-    background: #fff;
-    color: #0a0a0a;
+    background: #fff; color: #222;
     font-family: "Fragment Mono", monospace;
-    overflow-x: hidden;
-    min-height: 100vh;
+    overflow-x: hidden; min-height: 100vh;
   }
-  body {
-    padding: 2.4rem 2.6rem;
-  }
+  body { padding: 2.4rem 2.6rem; }
   a { color: inherit; text-decoration: none; }
 
-  main {
-    padding-bottom: 4rem;
-  }
+  main { padding-bottom: 4rem; max-width: 640px; }
 
   .back {
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: #0a0a0a;
-    opacity: 0.35;
-    transition: opacity 0.2s;
-    display: block;
-    margin-bottom: 2rem;
+    font-size: 11px; letter-spacing: 0.02em;
+    opacity: 0.35; transition: opacity 0.2s; display: block; margin-bottom: 2rem;
   }
   .back:hover { opacity: 1; }
 
-  .writing-list {
-    display: flex;
-    flex-direction: column;
-    gap: 2.4rem;
-    max-width: 640px;
+  /* Opening line, styled like the homepage bio text (13px / 1.95 / #222). */
+  .intro {
+    font-size: 13px; line-height: 1.95; letter-spacing: 0.01em; color: #222;
+    margin-bottom: 2.2rem;
   }
+  .intro-link { text-decoration: underline; text-underline-offset: 2px; transition: opacity 0.2s; }
+  .intro-link:hover { opacity: 0.55; }
 
+  /* Clean text index in the bio's voice, with a "> " that tilts down on hover. */
+  .writing-list { display: flex; flex-direction: column; gap: 0.65rem; }
   .piece {
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    line-height: 1.7;
-    text-transform: uppercase;
+    display: block;
+    font-size: 13px; line-height: 1.6; letter-spacing: 0.01em; color: #222;
+  }
+  .piece-mark {
+    display: inline-block; opacity: 0.45; margin-right: 0.45em;
+    transition: transform 0.2s ease;
+  }
+  .piece:hover .piece-mark { transform: rotate(90deg); }
+  .piece-date { opacity: 0.4; margin-left: 0.6rem; white-space: nowrap; }
+
+  /* The thumbnail + subtitle expand inline when the row is hovered. */
+  .piece-reveal {
+    display: flex; flex-direction: column; gap: 0.7rem; align-items: flex-start;
+    max-height: 0; opacity: 0; overflow: hidden; margin-top: 0; padding-left: 1.25em;
+    transition: max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease;
+  }
+  .piece:hover .piece-reveal { max-height: 360px; opacity: 1; margin-top: 0.5rem; }
+  .piece-note { font-size: 12px; line-height: 1.6; letter-spacing: 0.01em; opacity: 0.7; color: #222; }
+  .piece-thumb {
+    width: 220px; max-width: 100%; aspect-ratio: 16 / 9; object-fit: cover;
+    background: #f3f3f3; display: block;
   }
 
-  .piece-title {
-    transition: opacity 0.2s;
-  }
-  .piece-title:hover { opacity: 0.35; }
-
-  .piece-date {
-    opacity: 0.35;
-    margin-left: 0.6rem;
+  /* Touch screens (no hover): show the subtitle inline, keep it bare — no thumbnails, no rotation. */
+  @media (hover: none) {
+    .piece-reveal { max-height: none; opacity: 1; margin-top: 0.25rem; }
+    .piece-thumb { display: none; }
   }
 
-  .piece-note {
-    opacity: 0.35;
-    margin-top: 0.4rem;
-  }
-
-  .more {
-    display: inline-block;
-    margin-top: 3.4rem;
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    opacity: 0.35;
-    transition: opacity 0.2s;
-  }
-  .more:hover { opacity: 1; }
-
-  /* Draw text with thin strokes on Macs, like iPhones do (macOS otherwise
-     thickens text, making the same font look bolder on a laptop). */
   html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 </style>
 </head>
@@ -87,89 +73,105 @@
 
 <main>
   <a class="back" href="index.html">← Back</a>
+  <p class="intro">A large part of my studies manifests in my writing, which you can find mostly on <a class="intro-link" href="https://substack.com/@laurenwlee" target="_blank" rel="noopener">Substack</a>. Some examples:</p>
   <div class="writing-list" id="writing-list"></div>
-  <a class="more" href="https://substack.com/@laurenwlee" target="_blank" rel="noopener">Read everything on Substack →</a>
 </main>
 
 <script>
   // ── Writing — selected pieces. Add new ones at the TOP. ──
   const WRITINGS = [
-    {
-      title: "When life is a game, sell a newspaper.",
-      note: "Some legitimate headlines and the only tech biopic I want to talk about.",
-      date: "October 2026",
-      url: "https://specifications.substack.com/p/when-life-is-a-game-sell-a-newspaper"
-    },
-    {
-      title: "The Economics of Moving Slow",
-      note: "On the joys of roasting, brewing, Blue Bottle's future, and a little homage to the slow in the speed of AI.",
-      date: "April 2026",
-      url: "https://laurenwlee.substack.com/p/the-economics-of-moving-slow"
-    },
-    {
-      title: "Bro, it's me!",
-      note: "On the cosmetics of a font, (type)face, frame.",
-      date: "June 2026",
-      url: "https://specifications.substack.com/p/bro-its-me"
-    },
-    {
-      title: "Are we stuck in a Fool's Game?",
-      note: "On coding companions and the continued consumer AI palooza.",
-      date: "May 2026",
-      url: "https://specifications.substack.com/p/are-we-stuck-in-a-fools-game"
-    },
-    {
-      title: "A Note on Regeneration",
-      note: "And how aggregation of the past may help us better understand what it will take to innovate for the consumer.",
-      date: "November 2025",
-      url: "https://laurenwlee.substack.com/p/a-note-on-regeneration"
-    },
-    {
-      title: "Tteok, Tteok, Goose!",
-      note: "In pursuit of Fall, impeccable taste, and hyper-specialization fit with many cups of coffee.",
-      date: "October 2025",
-      url: "https://laurenwlee.substack.com/p/non-perishables-008-tteok-tteok-goose"
-    },
-    {
-      title: "Tech Merch is Alive and Well",
-      note: "On status-making in the age of AI.",
-      date: "October 2025",
-      url: "https://laurenwlee.substack.com/p/tech-merch-is-alive-and-well"
-    },
-    {
-      title: "A Note on the Luxury of Time",
-      note: "Your friendly Historian has returned in August's return to our State of Spring.",
-      date: "September 2025",
-      url: "https://laurenwlee.substack.com/p/a-note-on-the-luxury-of-time"
-    },
-  ];
+  {
+    "title": "When life is a game, sell a newspaper.",
+    "note": "Some legitimate headlines and the only tech biopic I want to talk about.",
+    "date": "October 2026",
+    "url": "https://specifications.substack.com/p/when-life-is-a-game-sell-a-newspaper",
+    "img": "https://substackcdn.com/image/fetch/$s_!L0Jr!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7fedd5e1-d3cd-4e49-adc9-befd2fbb6700_2394x1355.png"
+  },
+  {
+    "title": "The Economics of Moving Slow",
+    "note": "On the joys of roasting, brewing, Blue Bottle's future, and a little homage to the slow in the speed of AI.",
+    "date": "April 2026",
+    "url": "https://laurenwlee.substack.com/p/the-economics-of-moving-slow",
+    "img": "https://substackcdn.com/image/fetch/$s_!v9ty!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F1f8bf251-e982-49c7-8ddc-091ec8932a70_3320x4701.jpeg"
+  },
+  {
+    "title": "Bro, it's me!",
+    "note": "On the cosmetics of a font, (type)face, frame.",
+    "date": "June 2026",
+    "url": "https://specifications.substack.com/p/bro-its-me",
+    "img": "https://substackcdn.com/image/fetch/$s_!aoBk!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F4ce845a7-f877-4656-b707-7b8217e26d01_1280x709.jpeg"
+  },
+  {
+    "title": "Are we stuck in a Fool's Game?",
+    "note": "On coding companions and the continued consumer AI palooza.",
+    "date": "May 2026",
+    "url": "https://specifications.substack.com/p/are-we-stuck-in-a-fools-game",
+    "img": "https://substackcdn.com/image/fetch/$s_!V1C9!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F108569ab-1dff-41aa-8521-655967c1d5fe_1450x1258.png"
+  },
+  {
+    "title": "A Note on Regeneration",
+    "note": "And how aggregation of the past may help us better understand what it will take to innovate for the consumer.",
+    "date": "November 2025",
+    "url": "https://laurenwlee.substack.com/p/a-note-on-regeneration",
+    "img": "https://substackcdn.com/image/fetch/$s_!UpFk!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F63f42c86-9265-4f13-bda0-37cd6787e4a7_1050x562.png"
+  },
+  {
+    "title": "Tteok, Tteok, Goose!",
+    "note": "In pursuit of Fall, impeccable taste, and hyper-specialization fit with many cups of coffee.",
+    "date": "October 2025",
+    "url": "https://laurenwlee.substack.com/p/non-perishables-008-tteok-tteok-goose",
+    "img": "https://substackcdn.com/image/fetch/$s_!JFWx!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F7473fcdb-ceef-4ab8-b3c2-29c96345e090_1658x2211.heic"
+  },
+  {
+    "title": "Tech Merch is Alive and Well",
+    "note": "On status-making in the age of AI.",
+    "date": "October 2025",
+    "url": "https://laurenwlee.substack.com/p/tech-merch-is-alive-and-well",
+    "img": "https://substackcdn.com/image/fetch/$s_!bBgH!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F6f9fc62e-87ca-4089-a1e7-8d43f6b8982f_1146x912.png"
+  },
+  {
+    "title": "A Note on the Luxury of Time",
+    "note": "Your friendly Historian has returned in August's return to our State of Spring.",
+    "date": "September 2025",
+    "url": "https://laurenwlee.substack.com/p/a-note-on-the-luxury-of-time",
+    "img": "https://substackcdn.com/image/fetch/$s_!t2Jl!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2Fc7162bc1-d6ed-40b6-b147-9651f7afd65a_826x996.png"
+  },
+  {
+    "title": "The March Madness of It All",
+    "note": "State of Feb/March.",
+    "date": "April 2025",
+    "url": "https://laurenwlee.substack.com/p/the-march-madness-of-it-all",
+    "img": "https://substackcdn.com/image/fetch/$s_!BT5n!,w_1200,h_675,c_fill,f_jpg,q_auto:good,fl_progressive:steep,g_auto/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F677d4b1b-7a8c-4598-a15b-3d192e7e1361_554x652.png"
+  }
+];
 
   const list = document.getElementById("writing-list");
   WRITINGS.forEach(item => {
-    const div = document.createElement("div");
-    div.className = "piece";
+    const a = document.createElement("a");
+    a.className = "piece";
+    a.href = item.url; a.target = "_blank"; a.rel = "noopener";
 
-    const title = document.createElement("a");
-    title.className = "piece-title";
-    title.href = item.url;
-    title.target = "_blank";
-    title.rel = "noopener";
-    title.textContent = item.title;
+    const head = document.createElement("div");
+    head.className = "piece-head";
+    const mark = document.createElement("span"); mark.className = "piece-mark"; mark.textContent = ">";
+    const title = document.createElement("span"); title.className = "piece-title"; title.textContent = item.title;
+    const date = document.createElement("span"); date.className = "piece-date"; date.textContent = item.date;
+    head.append(mark, title, date);
 
-    const date = document.createElement("span");
-    date.className = "piece-date";
-    date.textContent = item.date;
-
-    const line = document.createElement("div");
-    line.append(title, date);
-
+    const reveal = document.createElement("div");
+    reveal.className = "piece-reveal";
+    const thumb = document.createElement("img");
+    thumb.className = "piece-thumb"; thumb.src = item.img; thumb.alt = ""; thumb.loading = "lazy";
     const note = document.createElement("div");
-    note.className = "piece-note";
-    note.textContent = item.note;
+    note.className = "piece-note"; note.textContent = item.note;
+    reveal.append(note, thumb);
 
-    div.append(line, note);
-    list.appendChild(div);
+    a.append(head, reveal);
+    list.appendChild(a);
   });
+
+  // Preload the thumbnails so the first expand is instant.
+  WRITINGS.forEach(it => { const im = new Image(); im.src = it.img; });
 </script>
 </body>
 </html>
