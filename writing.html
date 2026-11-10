@@ -4,6 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <script src="desktop-frame.js"></script>
+<script>
+  // On a computer this page is shown inside the 430-wide phone-frame (see
+  // desktop-frame.js). There, match the bio's desktop size: shrink the text to
+  // 12px. On a phone the page is top-level, so it stays at 13px — already the
+  // same size as the homepage bio there.
+  if (window.self !== window.top) {
+    var s = document.createElement("style");
+    s.textContent = ".intro,.piece{font-size:12px!important}";
+    (document.head || document.documentElement).appendChild(s);
+  }
+</script>
 <title>Writing — Lauren Wooyoung Lee</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -45,26 +56,36 @@
     display: inline-block; opacity: 0.45; margin-right: 0.45em;
     transition: transform 0.2s ease;
   }
-  .piece:hover .piece-mark { transform: rotate(90deg); }
+  .piece.open .piece-mark { transform: rotate(90deg); }
   .piece-date { opacity: 0.4; margin-left: 0.6rem; white-space: nowrap; }
 
-  /* The thumbnail + subtitle expand inline when the row is hovered. */
+  /* The thumbnail + subtitle expand inline — on hover (mouse) or when a row is tapped open (touch). */
   .piece-reveal {
     display: flex; flex-direction: column; gap: 0.7rem; align-items: flex-start;
     max-height: 0; opacity: 0; overflow: hidden; margin-top: 0; padding-left: 1.25em;
     transition: max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease;
   }
-  .piece:hover .piece-reveal { max-height: 360px; opacity: 1; margin-top: 0.5rem; }
+  .piece.open .piece-reveal { max-height: 360px; opacity: 1; margin-top: 0.5rem; }
   .piece-note { font-size: 12px; line-height: 1.6; letter-spacing: 0.01em; opacity: 0.7; color: #222; }
   .piece-thumb {
     width: 220px; max-width: 100%; aspect-ratio: 16 / 9; object-fit: cover;
     background: #f3f3f3; display: block;
   }
 
-  /* Touch screens (no hover): show the subtitle inline, keep it bare — no thumbnails, no rotation. */
+  /* Mouse / trackpad: hovering a row opens it, as before. */
+  @media (hover: hover) {
+    .piece:hover .piece-mark { transform: rotate(90deg); }
+    .piece:hover .piece-reveal { max-height: 360px; opacity: 1; margin-top: 0.5rem; }
+  }
+
+  /* Touch screens (no hover): tap the arrow to open/close a row. Give it a bigger tap target. */
   @media (hover: none) {
-    .piece-reveal { max-height: none; opacity: 1; margin-top: 0.25rem; }
-    .piece-thumb { display: none; }
+    .piece-mark {
+      opacity: 0.55;
+      padding: 0.45em 0.55em 0.45em 0.15em;
+      margin: -0.45em 0.45em -0.45em -0.15em;
+      position: relative; z-index: 2;
+    }
   }
 
   html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
@@ -166,6 +187,16 @@
     const note = document.createElement("div");
     note.className = "piece-note"; note.textContent = item.note;
     reveal.append(note, thumb);
+
+    // On touch screens (no hover), tapping the arrow opens/closes the row
+    // instead of following the link — the title still opens the piece.
+    mark.addEventListener("click", (e) => {
+      if (window.matchMedia("(hover: none)").matches) {
+        e.preventDefault();
+        e.stopPropagation();
+        a.classList.toggle("open");
+      }
+    });
 
     a.append(head, reveal);
     list.appendChild(a);

@@ -96,6 +96,38 @@
     width: 100%;
     letter-spacing: 0.01em;
   }
+  /* Nav below the bio: a left-aligned "> WRITING / > THINGS / > BEYOND" list
+     that appears with the bio (no fade), matching the arrow style on Writing. */
+  .bio-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.55rem;
+    margin-top: 2.4rem;
+  }
+  .bio-nav a, .landing-nav a {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.2s;
+  }
+  .bio-nav a:hover, .landing-nav a:hover { opacity: 0.35; }
+  .bio-nav .nav-mark, .landing-nav .nav-mark { display: inline-block; opacity: 0.45; margin-right: 0.55em; }
+
+  /* Landing nav: the same arrow list, over the ear at the bottom-left.
+     Absolute inside #landing, so it scrolls away with the landing (no fade). */
+  .landing-nav {
+    position: absolute;
+    left: 2.6rem;
+    bottom: 2.4rem;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
   footer {
     padding: 2rem 2.8rem;
     font-size: 10px;
@@ -161,13 +193,6 @@
 </head>
 <body>
 <section id="landing">
-  <nav class="corner-nav">
-    <a href="writing.html">Writing</a>
-    <a href="things.html">Things</a>
-    <!-- Community link hidden for now (Oct 2026). The page is still in community.html; restore with:
-    <a href="community.html">Community</a> -->
-    <a href="https://www.linkedin.com/in/laurenwlee/" target="_blank" rel="noopener">Beyond</a>
-  </nav>
   <div id="ear-wrap">
     <svg id="ear-svg" viewBox="0 0 319 500" preserveAspectRatio="xMidYMid meet"
          xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -193,11 +218,23 @@
     </svg>
   </div>
   <span class="site-name">Lauren Wooyoung Lee</span>
+  <nav class="landing-nav">
+    <a href="writing.html"><span class="nav-mark">&gt;</span>Writing</a>
+    <a href="things.html"><span class="nav-mark">&gt;</span>Things</a>
+    <a href="https://www.linkedin.com/in/laurenwlee/" target="_blank" rel="noopener"><span class="nav-mark">&gt;</span>Beyond</a>
+  </nav>
 </section>
 <div id="scroll-space"></div>
 
 <section id="bio" class="page-section">
   <p class="bio-text">I like to think I've always known how to <br class="desk-br">read a room. As a choir kid, I trained my <strong>ear</strong> to know when a blend locks in, a similar negotiation to growing up across cultures in Hong Kong, New York, and Boston. At Harvard, <br class="desk-br">I wrote 118 pages investigating 19th-century American domesticity through the lens of commercial advertising, and have spent my career since studying the technology and economics of everyday life.</p>
+  <nav class="bio-nav">
+    <a href="writing.html"><span class="nav-mark">&gt;</span>Writing</a>
+    <a href="things.html"><span class="nav-mark">&gt;</span>Things</a>
+    <!-- Community link hidden for now (Oct 2026). The page is still in community.html; restore with:
+    <a href="community.html"><span class="nav-mark">&gt;</span>Community</a> -->
+    <a href="https://www.linkedin.com/in/laurenwlee/" target="_blank" rel="noopener"><span class="nav-mark">&gt;</span>Beyond</a>
+  </nav>
 </section>
 <footer><span>© <span id="yr"></span></span></footer>
 
@@ -338,10 +375,19 @@
   // ── Name: drift down while the page scrolls up, then ride along as the bio's heading ──
   const siteName = document.querySelector(".site-name");
   const bioText = document.querySelector(".bio-text");
-  const navMenu = document.querySelector(".corner-nav");
+  const landingNav = document.querySelector(".landing-nav");
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // Landing nav (over the ear): fades out the moment the ear starts to move, i.e. as
+  // soon as you scroll. The same links reappear below the bio at the bottom.
+  function placeLandingNav() {
+    const vh = window.innerHeight;
+    const sy = Math.max(window.scrollY, 0);
+    const o = Math.max(0, 1 - sy / (vh * 0.12));
+    landingNav.style.opacity = o.toFixed(3);
+    landingNav.style.pointerEvents = o < 0.05 ? "none" : "auto";
+  }
   function placeName() {
-    const startY = navMenu.offsetTop;                       // level with the menu
+    const startY = 2.4 * 16;                                // where the name starts (top-left)
     const gap = 1.4 * 16;                                   // space between heading and bio
     const headingY = bioText.getBoundingClientRect().top - siteName.offsetHeight - gap;
     // With "reduce motion" on, the name just scrolls away with the page like normal text.
@@ -357,24 +403,15 @@
     const y = reduceMotion ? startY - sy : Math.min(glide, headingY);
     siteName.style.transform = `translateY(${y}px)`;
   }
-  // ── Nav: the landing is just the name — the menu stays out of sight through the
-  //    whole scroll and eases in only once, as the bio settles into its reading state. ──
-  function placeNav() {
-    if (reduceMotion) { navMenu.style.opacity = "1"; navMenu.style.pointerEvents = "auto"; return; }
-    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-    if (maxScroll <= 0) { navMenu.style.opacity = "1"; navMenu.style.pointerEvents = "auto"; return; }
-    const p = Math.min(Math.max(window.scrollY, 0), maxScroll) / maxScroll;
-    const back = Math.min(Math.max((p - 0.82) / 0.18, 0), 1);  // appears only as the bio arrives
-    navMenu.style.opacity = back.toFixed(3);
-    navMenu.style.pointerEvents = back < 0.05 ? "none" : "auto";
-  }
+  // The nav now lives in the bio section (a left-aligned "> WRITING" list), so it just
+  // scrolls into view with the bio — no separate fade-in to manage.
   let nameFrame = 0;
   window.addEventListener("scroll", () => {
-    if (!nameFrame) nameFrame = requestAnimationFrame(() => { nameFrame = 0; placeName(); placeNav(); });
+    if (!nameFrame) nameFrame = requestAnimationFrame(() => { nameFrame = 0; placeName(); placeLandingNav(); });
   }, { passive: true });
-  window.addEventListener("resize", () => { placeName(); placeNav(); });
-  placeName(); placeNav();
-  window.addEventListener("load", () => { buildLetters(); onScroll(); placeName(); placeNav(); });
+  window.addEventListener("resize", () => { placeName(); placeLandingNav(); });
+  placeName(); placeLandingNav();
+  window.addEventListener("load", () => { buildLetters(); onScroll(); placeName(); placeLandingNav(); });
   window.addEventListener("resize", buildLetters);
 </script>
 
@@ -387,7 +424,7 @@
   colorInput.addEventListener('input', () => {
     const c = colorInput.value;
     document.body.style.color = c;
-    document.querySelectorAll('.bio-text, .corner-nav a, .corner-nav-item, .site-name').forEach(el => {
+    document.querySelectorAll('.bio-text, .bio-nav a, .site-name').forEach(el => {
       el.style.color = c;
     });
     document.querySelectorAll('#ear-letters-1 text, #ear-letters-2 text').forEach(el => el.setAttribute('fill', c));
