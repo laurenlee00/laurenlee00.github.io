@@ -112,11 +112,11 @@
   }
 
   .thing-link {
-    opacity: 0.35;
-    transition: opacity 0.2s;
+    transition: color 0.2s;
     word-break: break-all;
   }
-  .thing-link:hover { opacity: 1; }
+  .thing-link:visited { color: #551A8B; }
+  .thing-link:hover { color: #0000EE; text-decoration: underline; }
 
   /* Draw text with thin strokes on Macs, like iPhones do (macOS otherwise
      thickens text, making the same font look bolder on a laptop). */
